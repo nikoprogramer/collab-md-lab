@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collab MD Editor</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+
+  <!-- Login screen -->
+  <div id="login-page">
+    <div class="login-card">
+      <h1 class="login-logo">Collab MD</h1>
+
+      <!-- Tab switcher -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="guest">Gość</button>
+        <button class="auth-tab" data-tab="account">Konto</button>
+      </div>
+
+      <!-- Guest panel -->
+      <div id="tab-guest" class="auth-panel">
+        <p class="auth-desc">Wejdź bez rejestracji. Twoja sesja jest tymczasowa.</p>
+        <input id="nickname-input" type="text" placeholder="Twój nickname" autocomplete="off" />
+        <button id="login-btn" class="btn-primary">Wejdź jako gość</button>
+      </div>
+
+      <!-- Account panel -->
+      <div id="tab-account" class="auth-panel" style="display:none">
+        <div class="auth-mode">
+          <button class="mode-btn active" data-mode="login">Zaloguj się</button>
+          <button class="mode-btn" data-mode="register">Zarejestruj się</button>
+        </div>
+        <input id="auth-username" type="text"     placeholder="Nazwa użytkownika" autocomplete="username" />
+        <input id="auth-password" type="password" placeholder="Hasło"             autocomplete="current-password" />
+        <input id="auth-password2" type="password" placeholder="Powtórz hasło"   autocomplete="new-password" style="display:none" />
+        <p id="auth-error" class="auth-error"></p>
+        <button id="auth-submit" class="btn-primary">Zaloguj się</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor screen (hidden until login) -->
+  <div id="editor-page">
+    <header>
+      <span class="app-title">Collab MD</span>
+      <span id="current-file">Wybierz plik…</span>
+      <span id="user-label"></span>
+      <button id="settings-btn" title="Ustawienia">⚙</button>
+      <button id="logout-btn" title="Wyloguj z konta">Wyloguj</button>
+
+      <!-- Settings dropdown -->
+      <div id="settings-panel">
+        <p class="settings-title">Kolor kursora</p>
+        <div id="color-swatches"></div>
+      </div>
+    </header>
+
+    <div class="panels">
+
+      <!-- Left panel: file list -->
+      <div class="file-panel">
+        <div class="file-panel-header">
+          <span>Pliki</span>
+          <button id="new-file-btn" title="Nowy plik">+</button>
+        </div>
+        <div id="file-list"></div>
+      </div>
+
+      <!-- Center panel: editor -->
+      <div class="editor-panel">
+        <div id="toolbar">
+          <button data-action="bold"          title="Pogrubienie (Ctrl+B)"><b>B</b></button>
+          <button data-action="italic"        title="Kursywa (Ctrl+I)"><i>I</i></button>
+          <button data-action="strikethrough" title="Przekreślenie">S̶</button>
+          <button data-action="code"          title="Kod inline"><code>`</code></button>
+          <div class="toolbar-sep"></div>
+          <button data-action="h1"            title="Nagłówek 1">H1</button>
+          <button data-action="h2"            title="Nagłówek 2">H2</button>
+          <button data-action="h3"            title="Nagłówek 3">H3</button>
+          <div class="toolbar-sep"></div>
+          <button data-action="ul"            title="Lista punktowana">&#8226; Lista</button>
+          <button data-action="ol"            title="Lista numerowana">1. Lista</button>
+          <button data-action="quote"         title="Cytat">❝</button>
+          <div class="toolbar-sep"></div>
+          <button data-action="link"          title="Link">&#128279;</button>
+          <button data-action="codeblock"     title="Blok kodu">&#9130;&#9130;&#9130;</button>
+          <button data-action="hr"            title="Linia pozioma">&#8212;&#8212;</button>
+        </div>
+        <div id="editor-container"></div>
+        <div id="no-file-msg">← Wybierz plik, aby zacząć edycję</div>
+      </div>
+
+      <!-- Right panel: markdown preview -->
+      <div class="preview-panel" id="preview-panel"></div>
+
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "collab-md-editor",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"node server.js\" \"vite\"",
+    "kill": "taskkill /F /IM node.exe & echo Procesy Node.js zatrzymane",
+    "restart": "npm run kill && npm run dev",
+    "build": "vite build",
+    "start": "cross-env NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "@codemirror/lang-markdown": "^6.2.4",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.10.0",
+    "codemirror": "^6.0.1",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.5.2",
+    "marked": "^11.1.1",
+    "vite": "^5.0.12",
+    "ws": "^8.14.2",
+    "y-codemirror.next": "^0.3.2",
+    "y-websocket": "^1.5.4",
+    "yjs": "^13.6.15"
+  }
+}

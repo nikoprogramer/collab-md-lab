@@ -2,6 +2,9 @@
   "name": "collab-md-editor",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "concurrently \"node server.js\" \"vite\"",
     "kill": "taskkill /F /IM node.exe & echo Procesy Node.js zatrzymane",

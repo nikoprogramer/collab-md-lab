@@ -227,8 +227,11 @@ async function handleAccountSubmit() {
   errorEl.textContent = "";
 
   if (!username || !password) { errorEl.textContent = "Wypełnij wszystkie pola."; return; }
+  if (username.length < 3 || username.length > 30) { errorEl.textContent = "Nazwa: 3–30 znaków."; return; }
+  if (!/^[\w\-]+$/.test(username)) { errorEl.textContent = "Nazwa: tylko litery, cyfry, _ i -."; return; }
 
   if (authMode === "register") {
+    if (password.length < 6) { errorEl.textContent = "Hasło: min. 6 znaków."; return; }
     if (password !== password2) { errorEl.textContent = "Hasła się nie zgadzają."; return; }
     try {
       const res = await fetch(`${API_BASE}/api/auth/register`, {

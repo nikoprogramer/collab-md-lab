@@ -10,10 +10,11 @@ Przeglądarkowy edytor Markdown z kolaboracją w czasie rzeczywistym. Wiele osó
 - **Persystencja sesji** — zalogowany użytkownik pozostaje zalogowany po odświeżeniu strony (token w `localStorage`)
 - **Kolaboracja w czasie rzeczywistym** — równoległe edytowanie z widocznymi kursorami i zaznaczeniami innych użytkowników (Yjs CRDT + WebSocket)
 - **Pasek narzędzi** — pogrubienie, kursywa, przekreślenie, nagłówki H1–H3, listy, cytaty, linki, bloki kodu; skróty Ctrl+B / Ctrl+I
-- **Wybór koloru kursora** — paleta 12 kolorów, wybór zapisywany w `localStorage`
+- **Wybór koloru kursora** — paleta 12 kolorów dostępna przez ikonę ⚙ w nagłówku; wybór zapisywany w `localStorage`
 - **Podgląd Markdown** — renderowanie na żywo w panelu obok edytora
 - **Zarządzanie plikami** — tworzenie i usuwanie plików `.md` przez interfejs
 - **Rate limiting** — max 5 prób logowania / rejestracji na 15 minut per IP
+- **Walidacja danych** — reguły sprawdzane po obu stronach (frontend dla UX, backend jako warstwa bezpieczeństwa)
 - **Autozapis** — debounced zapis po każdej zmianie (300 ms)
 
 ---
@@ -28,7 +29,7 @@ Przeglądarkowy edytor Markdown z kolaboracją w czasie rzeczywistym. Wiele osó
 | Podgląd MD | [marked](https://marked.js.org/) |
 | Build frontendu | [Vite](https://vitejs.dev/) |
 | Serwer HTTP | [Express](https://expressjs.com/) |
-| Baza danych | [SQLite](https://sqlite.org/) via [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) |
+| Baza danych | SQLite via [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) |
 | Hasła | [bcryptjs](https://github.com/dcodeIO/bcrypt.js) |
 | Rate limiting | [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit) |
 
@@ -46,6 +47,7 @@ Przeglądarkowy edytor Markdown z kolaboracją w czasie rzeczywistym. Wiele osó
 ├── files/             # Pliki .md użytkowników (tworzony automatycznie)
 ├── users.db           # Baza SQLite (tworzona automatycznie)
 ├── railway.toml       # Konfiguracja Railway
+├── .nvmrc             # Wersja Node.js dla Nixpacks / nvm
 └── package.json
 ```
 
@@ -55,7 +57,7 @@ Przeglądarkowy edytor Markdown z kolaboracją w czasie rzeczywistym. Wiele osó
 
 ### Wymagania
 
-- Node.js ≥ 18
+- Node.js ≥ 20
 - npm ≥ 9
 
 ### Instalacja i start
@@ -98,7 +100,7 @@ git push -u origin main
 
 1. Zaloguj się na [railway.app](https://railway.app)
 2. **New Project → Deploy from GitHub repo** → wybierz repozytorium
-3. Railway automatycznie wykrywa Node.js i używa `railway.toml`:
+3. Railway automatycznie wykrywa Node.js (`.nvmrc` wymusza wersję 20) i używa `railway.toml`:
    - build: `npm run build`
    - start: `npm start`
 
@@ -153,5 +155,5 @@ Endpointy `/register` i `/login` są objęte rate limitingiem: **5 prób / 15 mi
 
 ### WebSocket
 
-Klient łączy się pod `ws://<host>/<nazwa-pliku.md>`.  
+Klient łączy się pod `wss://<host>/<nazwa-pliku.md>` (produkcja) lub `ws://localhost:3000/<nazwa>` (dev).  
 Protokół: standardowa synchronizacja Yjs (binarny, przez `y-websocket`).

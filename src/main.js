@@ -7,7 +7,7 @@ import { marked } from "marked";
 
 const WS_URL = import.meta.env.DEV
   ? "ws://localhost:3000"
-  : `ws://${window.location.host}`;
+  : `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}`;
 
 const API_BASE = import.meta.env.DEV ? "http://localhost:3000" : "";
 
